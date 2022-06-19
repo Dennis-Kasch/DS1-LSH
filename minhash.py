@@ -2,6 +2,7 @@ import pandas as pd
 from nltk.corpus import stopwords
 import random
 import sys
+from datasketch import MinHash
 
 global stopWords
 global maxRow
@@ -99,6 +100,9 @@ def createHashfunctions(hashCount, maxValue):
         hashFunctions.append(lambda x: (a*x+b) % prime)
     return hashFunctions
 
+
+# unfortunately this self implemented function is not working :/
+'''
 def minhash(charMatrix, hashFunctions):
     # fill signature matrix with "infinity"
     signatureMatrix = [
@@ -113,6 +117,16 @@ def minhash(charMatrix, hashFunctions):
                     hashValue = hashFunctions[i](r)
                     signatureMatrix[c][i] = min(signatureMatrix[c][i], hashValue)
     return signatureMatrix
+'''
+
+def minhash(shingleBagOne, shingleBagTwo, hashCount):
+    hashOne = MinHash(num_perm=hashCount)
+    hashTwo = MinHash(num_perm=hashCount)
+    for shingle in shingleBagOne:
+        hashOne.update(shingle.encode("utf8"))
+    for shingle in shingleBagTwo:
+        hashTwo.update(shingle.encode("utf8"))
+    return hashOne.jaccard(hashTwo)
 
 def LSH(sigMatrix, bandCount, rowCount):
     # banding technique
