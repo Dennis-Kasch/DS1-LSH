@@ -81,6 +81,9 @@ def test_createHashfunctions():
             assert hashFunction(randNumber)<prime
             j+=1
 
+# this function has been changed to directly estimate 
+# the jaccard similarity with LSH by using the datasketch library
+'''
 def test_minhash():
     hashFunctions = [lambda x: (x+1)%5, lambda x: (3*x+1)%5,]
     charMatrix = [
@@ -97,6 +100,7 @@ def test_minhash():
         [1,0]
     ]
     assert sigMatrix == expectedMatrix
+'''
 
 def test_LSH():
     sigMatrix = [
