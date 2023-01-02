@@ -100,25 +100,6 @@ def createHashfunctions(hashCount, maxValue):
         hashFunctions.append(lambda x: (a*x+b) % prime)
     return hashFunctions
 
-
-# unfortunately this self implemented function is not working :/
-'''
-def minhash(charMatrix, hashFunctions):
-    # fill signature matrix with "infinity"
-    signatureMatrix = [
-        [ sys.maxsize for x in range(len(hashFunctions))] 
-        for y in range(len(charMatrix))
-    ]
-    # compute values for signature matrix
-    for c in range(len(charMatrix)):
-        for r in range(len(charMatrix[c])):
-            if charMatrix[c][r] == 1:
-                for i in range(len(hashFunctions)):
-                    hashValue = hashFunctions[i](r)
-                    signatureMatrix[c][i] = min(signatureMatrix[c][i], hashValue)
-    return signatureMatrix
-'''
-
 def minhash(shingleBagOne, shingleBagTwo, hashCount):
     hashOne = MinHash(num_perm=hashCount)
     hashTwo = MinHash(num_perm=hashCount)
